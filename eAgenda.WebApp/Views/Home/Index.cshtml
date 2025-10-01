@@ -1,0 +1,42 @@
+﻿@{
+	ViewBag.Titulo = "Página Inicial";
+}
+
+<hr />
+<div class="d-flex flex-wrap gap-2 gap-lg-5">
+	<div class="col order-1 order-lg-0 py-3 py-lg-5">
+		<h2 class="text-primary fs-1 fw-bold">Sua rotina organizada em um só lugar!</h2>
+
+		<p class="fs-4 mt-3">
+			O eAgenda é o app ideal para quem busca praticidade e controle no dia a dia. Com recursos poderosos, o eAgenda permite que você gerencie seus contatos, compromissos, despesas, categorias de despesas e tarefas de forma simples e eficiente.
+		</p>
+
+		<p class="fs-4 mt-3">
+			Quer você esteja gerenciando sua vida pessoal ou profissional, o eAgenda é o assistente digital que você precisa para manter tudo sob controle.
+		</p>
+
+		<p class="fs-4 mt-4 text-secondary-emphasis">Clique em uma das opções abaixo para prosseguir:</p>
+
+		<div class="d-flex flex-wrap gap-2">
+			<div class="col col-lg-3">
+				<a href="/contatos" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Contatos</a>
+			</div>
+			<div class="col col-lg-3">
+				<a href="/compromissos" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Compromissos</a>
+			</div>
+			<div class="col col-lg-3">
+				<a href="/categorias" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Categorias</a>
+			</div>
+			<div class="col col-lg-3">
+				<a href="/despesas" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Despesas</a>
+			</div>
+			<div class="col col-lg-3">
+				<a href="/tarefas" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Tarefas</a>
+			</div>
+		</div>
+
+	</div>
+	<div class="col-lg-4 order-0 order-lg-1 mx-auto">
+		<img src="~/images/todo-list.svg" alt="To-do list" class="img-fluid " style="max-width: 300px;"/>
+	</div>
+</div>

@@ -1,0 +1,106 @@
+﻿@model VisualizarTarefasViewModel
+
+@{
+    ViewBag.Titulo = "Visualização de Tarefas";
+
+    var status = Context.Request.Query["status"].ToString();
+
+    string ObterClassesDoFiltro(string filtro)
+    {
+        if (string.IsNullOrEmpty(filtro))
+            return string.IsNullOrEmpty(status) ? "btn btn-primary px-3 btn-filtro" : "btn btn-outline-primary px-3 btn-filtro";
+
+        return status == filtro ? "btn btn-primary px-3 btn-filtro" : "btn btn-outline-primary px-3 btn-filtro";
+    }
+}
+
+<div class="d-grid d-lg-flex flex-wrap gap-2 align-items-center">
+    <a class="btn btn-primary px-5" asp-action="Cadastrar">
+        <i class="bi bi-plus"></i>
+        Cadastrar Novo/a
+    </a>
+
+    <div class="ms-lg-auto d-grid d-lg-flex flex-wrap gap-2">
+        <a class="@ObterClassesDoFiltro(string.Empty)" asp-action="Index">
+            <i class="bi bi-list"></i>
+            Todas as tarefas
+        </a>
+
+        <a class="@ObterClassesDoFiltro("pendentes")" asp-action="Index" asp-route-status="pendentes">
+            <i class="bi bi-clock-history"></i>
+            Tarefas pendentes
+        </a>
+
+        <a class="@ObterClassesDoFiltro("concluidas")" asp-action="Index" asp-route-status="concluidas">
+            <i class="bi bi-check-all"></i>
+            Tarefas concluídas
+        </a>
+    </div>
+</div>
+
+<hr />
+
+<div class="d-flex flex-wrap gap-2">
+    @foreach (var tarefa in Model.Registros)
+    {
+        <div class="col-12 col-md-3 coluna-card">
+            <div class="card border-0" style="height: 235px;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline mb-2">
+                        <h5 class="card-title">@(tarefa.Titulo.Length > 18 ? tarefa.Titulo.Substring(0, 18) + "..." : tarefa.Titulo)</h5>
+                        <span class="badge rounded-pill text-bg-secondary px-3 py-2">@tarefa.Prioridade.ToString()</span>
+                    </div>
+
+                    <p class="card-text mb-1"><span class="fw-semibold">Status:</span> @(tarefa.Concluida ? "Concluída" : "Pendente")</p>
+                    <p class="card-text mb-1"><span class="fw-semibold">Percentual de Conclusão:</span> @tarefa.PercentualConcluido.ToString() %</p>
+                    <p class="card-text mb-1"><span class="fw-semibold">Data de Criação:</span> @tarefa.DataCriacao.ToShortDateString()</p>
+
+                    @if (tarefa.Concluida)
+                    {
+                        <p class="card-text"><span class="fw-semibold">Data de Conclusão:</span> @tarefa.DataConclusao?.ToShortDateString()</p>
+                    }
+                </div>
+
+                <div class="card-footer bg-transparent border-0">
+                    <span class="d-flex gap-1 justify-content-end">
+                        <a title="Gerenciar itens" asp-action="GerenciarItens" asp-route-id="@tarefa.Id" class="btn btn-secondary rounded-circle opcao-card">
+                            <i class="bi bi-list-check"></i>
+                        </a>
+
+                        @if (!tarefa.Concluida)
+                        {
+                            <form asp-action="AlternarStatus" asp-route-id="@tarefa.Id">
+                                <button title="Concluir tarefa" class="btn btn-success rounded-circle opcao-card">
+                                    <i class="bi bi-check-all"></i>
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="AlternarStatus" asp-route-id="@tarefa.Id">
+                                <button title="Marcar tarefa como pendente" asp-action="AlternarStatus" asp-route-id="@tarefa.Id" class="btn btn-success rounded-circle opcao-card">
+                                    <i class="bi bi-clock-history"></i>
+                                </button>
+                            </form>
+                        }
+
+                        @if (!tarefa.Concluida)
+                        {
+                            <a title="Editar" asp-action="Editar" asp-route-id="@tarefa.Id" class="btn btn-primary rounded-circle opcao-card">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        }
+
+                        @if (tarefa.Concluida)
+                        {
+                            <a title="Excluir" asp-action="Excluir" asp-route-id="@tarefa.Id" class="btn btn-danger rounded-circle opcao-card">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        }
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

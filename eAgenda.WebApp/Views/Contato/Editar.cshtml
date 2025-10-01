@@ -1,0 +1,61 @@
+﻿@model EditarContatoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Edição de Contato";
+}
+
+<hr />
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card rounded-4 border-0">
+            <div class="card-body p-md-5">
+                <form asp-action="Editar" asp-route-id="@Model.Id">
+                    <h3>Formulário de Edição</h3>
+
+                    @if (ViewData.ModelState["CadastroUnico"]?.Errors.Count > 0)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
+                            @ViewData.ModelState["CadastroUnico"]!.Errors.First().ErrorMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Nome" class="control-label fs-5">Nome:</label>
+                        <input asp-for="Nome" class="form-control" placeholder="O nome é obrigatório"/>
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Telefone" class="control-label fs-5">Telefone:</label>
+                        <input asp-for="Telefone" class="form-control" placeholder="O telefone é obrigatório" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Email" class="control-label fs-5">E-mail:</label>
+                        <input asp-for="Email" class="form-control" placeholder="O e-mail é obrigatório" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Empresa" class="control-label fs-5">Empresa:</label>
+                        <input asp-for="Empresa" class="form-control" />
+                        <span asp-validation-for="Empresa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Cargo" class="control-label fs-5">Cargo:</label>
+                        <input asp-for="Cargo" class="form-control" />
+                        <span asp-validation-for="Cargo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                        <a href="/contatos">Voltar para a listagem</a>
+                        <button type="submit" class="btn btn-primary rounded-3 px-5">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

@@ -1,0 +1,10 @@
+body {
+    background-color: #E8ECED;
+}
+
+.opcao-card {
+    max-width: 39px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

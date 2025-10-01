@@ -1,0 +1,40 @@
+﻿@model VisualizarCategoriasViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Visualização de Categorias";
+}
+
+<p>
+    <a class="btn btn-primary px-4" href="/categorias/cadastrar">
+        <i class="bi bi-plus"></i>
+        Cadastrar Novo/a
+    </a>
+</p>
+
+<hr />
+
+<div class="d-flex flex-wrap gap-2">
+    @foreach (var item in Model.Registros)
+    {
+        <div class="col-12 col-md-3">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Titulo</h5>
+
+                    <span class="d-flex gap-1 justify-content-end mt-4">
+                        <a href="/categorias/detalhes/@item.Id" class="btn btn-secondary rounded-circle opcao-card">
+                            <i class="bi bi-search"></i>
+                        </a>
+                        <a href="/categorias/editar/@item.Id" class="btn btn-primary rounded-circle opcao-card">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="/categorias/excluir/@item.Id" class="btn btn-danger rounded-circle opcao-card">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
