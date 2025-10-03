@@ -1,4 +1,6 @@
-﻿using eAgenda.Dominio.ModuloContato;
+﻿using eAgenda.Dominio.ModuloCompromisso;
+using eAgenda.Dominio.ModuloContato;
+using eAgenda.Infraestrutura.Orm.ModuloCompromisso;
 using eAgenda.Infraestrutura.Orm.ModuloContato;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IRepositorioContato, RepositorioContatoEmOrm>();
+        services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmOrm>();
 
         return services;
     }
