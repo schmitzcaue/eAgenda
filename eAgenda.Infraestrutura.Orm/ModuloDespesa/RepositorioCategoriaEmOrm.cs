@@ -1,45 +1,61 @@
-﻿using eAgenda.Dominio.ModuloCategoria;
+﻿using eAgenda.Dominio.ModuloDespesa;
 using Microsoft.EntityFrameworkCore;
 
-namespace eAgenda.Infraestrutura.Orm.ModuloCategoria;
-public class RepositorioCategoriaEmOrm : IRepositorioCategoria
+namespace eAgenda.Infraestrutura.Orm.ModuloDespesa;
+
+public class RepositorioDespesaEmOrm : IRepositorioDespesa
 {
     private readonly AppDbContext context;
-    private readonly DbSet<Categoria> registros;
-    public RepositorioCategoriaEmOrm(AppDbContext context)
+    private readonly DbSet<Despesa> registros;
+
+    public RepositorioDespesaEmOrm(AppDbContext context)
     {
         this.context = context;
-        registros = context.Categorias;
+        registros = context.Despesas;
     }
-    public void CadastrarRegistro(Categoria novoRegistro)
+
+    public void CadastrarRegistro(Despesa novoRegistro)
     {
         registros.Add(novoRegistro);
+
         context.SaveChanges();
     }
-    public bool EditarRegistro(Guid idRegistro, Categoria registroEditado)
+
+    public bool EditarRegistro(Guid idRegistro, Despesa registroEditado)
     {
         var registroSelecionado = SelecionarRegistroPorId(idRegistro);
+
         if (registroSelecionado is null)
             return false;
+
         registroSelecionado.AtualizarRegistro(registroEditado);
+
         context.SaveChanges();
+
         return true;
     }
+
     public bool ExcluirRegistro(Guid idRegistro)
     {
         var registroSelecionado = SelecionarRegistroPorId(idRegistro);
+
         if (registroSelecionado is null)
             return false;
+
         registros.Remove(registroSelecionado);
+
         context.SaveChanges();
+
         return true;
     }
-    public Categoria? SelecionarRegistroPorId(Guid idRegistro)
+
+    public Despesa? SelecionarRegistroPorId(Guid idRegistro)
     {
-        return registros.Include(x => x.Despesas).FirstOrDefault(x => x.Id == idRegistro);
+        return registros.Include(c => c.Categorias).FirstOrDefault(x => x.Id == idRegistro);
     }
-    public List<Categoria> SelecionarRegistros()
+
+    public List<Despesa> SelecionarRegistros()
     {
-        return registros.ToList();
+        return registros.Include(c => c.Categorias).ToList();
     }
 }

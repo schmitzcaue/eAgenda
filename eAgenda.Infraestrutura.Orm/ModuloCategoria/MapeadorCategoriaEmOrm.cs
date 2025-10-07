@@ -1,42 +1,23 @@
-﻿using eAgenda.Dominio.ModuloContato;
+﻿using eAgenda.Dominio.ModuloCategoria;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eAgenda.Infraestrutura.Orm.ModuloContato;
+namespace eAgenda.Infraestrutura.Orm.ModuloCategoria;
 
-public class MapeadorEmOrm : IEntityTypeConfiguration<Contato>
+internal class MapeadorCategoriaEmOrm : IEntityTypeConfiguration<Categoria>
 {
-    public void Configure(EntityTypeBuilder<Contato> builder)
+    public void Configure(EntityTypeBuilder<Categoria> builder)
     {
-        builder.ToTable("TBContato");
+        builder.ToTable("TBCategoria");
 
         builder.HasKey(x => x.Id);
 
-        // NOME VARCHAR(100) NOT NULL
-        builder.Property(x => x.Nome)
-            .HasMaxLength(100)
-            .IsRequired();
+        builder.Property(x => x.Titulo)
+               .HasMaxLength(100)
+               .IsRequired();
 
-        // TELEFONE VARCHAR(20) NOT NULL
-        builder.Property(x => x.Telefone)
-            .HasMaxLength(20)
-            .IsRequired();
-
-        // EMAIL VARCHAR(100) NOT NULL
-        builder.Property(x => x.Email)
-            .HasMaxLength(100)
-            .IsRequired();
-
-        // EMPRESA VARCHAR(100) NULL
-        builder.Property(x => x.Empresa)
-            .HasMaxLength(100)
-            .IsRequired(false);
-
-        // CARGO  VARCHAR(100) NOT NULL
-        builder.Property(x => x.Cargo)
-            .HasMaxLength(100)
-            .IsRequired(false);
-
-        builder.Ignore(x => x.Compromissos);
+        builder.HasMany(x => x.Despesas)
+               .WithMany(d => d.Categorias)
+               .UsingEntity(e => e.ToTable("TBCategoria_TBDespesa"));
     }
 }
