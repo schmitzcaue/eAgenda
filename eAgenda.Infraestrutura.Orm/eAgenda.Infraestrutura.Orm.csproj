@@ -14,8 +14,4 @@
     <ProjectReference Include="..\eAgenda.Dominio\eAgenda.Dominio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

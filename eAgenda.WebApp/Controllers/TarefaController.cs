@@ -1,4 +1,5 @@
 ﻿using eAgenda.Dominio.ModuloTarefa;
+using eAgenda.Infraestrutura.Orm;
 using eAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,13 @@ namespace eAgenda.WebApp.Controllers;
 [Route("tarefas")]
 public class TarefaController : Controller
 {
+    private readonly AppDbContext context;
     private readonly IRepositorioTarefa repositorioTarefa;
 
-    public TarefaController(IRepositorioTarefa repositorioTarefa)
+    public TarefaController(AppDbContext context, IRepositorioTarefa repositorioTarefa)
     {
+        this.context = context;
+
         this.repositorioTarefa = repositorioTarefa;
     }
 
@@ -174,7 +178,9 @@ public class TarefaController : Controller
 
         var itemAdicionado = tarefaSelecionada.AdicionarItem(tituloItem);
 
-        repositorioTarefa.AdicionarItem(itemAdicionado);
+        context.ItensTarefas.Add(itemAdicionado);
+
+        context.SaveChanges();
 
         var gerenciarItensViewModel = new GerenciarItensViewModel(tarefaSelecionada);
 
@@ -199,7 +205,7 @@ public class TarefaController : Controller
         else
             tarefaSelecionada.MarcarItemPendente(itemSelecionado);
 
-        repositorioTarefa.AtualizarItem(itemSelecionado);
+        context.SaveChanges();
 
         var gerenciarItensViewModel = new GerenciarItensViewModel(tarefaSelecionada);
 
@@ -221,7 +227,7 @@ public class TarefaController : Controller
 
         tarefaSelecionada.RemoverItem(itemSelecionado);
 
-        repositorioTarefa.RemoverItem(itemSelecionado);
+        context.SaveChanges();
 
         var gerenciarItensViewModel = new GerenciarItensViewModel(tarefaSelecionada);
 

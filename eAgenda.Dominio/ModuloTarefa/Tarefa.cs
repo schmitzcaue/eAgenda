@@ -101,5 +101,6 @@ public class Tarefa : EntidadeBase<Tarefa>
     {
         Titulo = registroEditado.Titulo;
         Prioridade = registroEditado.Prioridade;
+        Itens = registroEditado.Itens;
     }
 }
