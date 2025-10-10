@@ -1,5 +1,6 @@
-using eAgenda.Infraestrutura.Arquivos;
 using eAgenda.Infraestrutura.Orm;
+using eAgenda.WebApp.Config;
+using Microsoft.EntityFrameworkCore;
 
 namespace eAgenda.WebApp;
 
@@ -10,12 +11,13 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        //builder.Services.AddCamadaInfraestruturaEmArquivo();
         builder.Services.AddCamadaInfraestruturaEmOrm(builder.Configuration);
 
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
+
+        app.ApplyMigrations();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
