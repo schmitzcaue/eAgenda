@@ -33,7 +33,7 @@ public sealed class RepositorioContatoEmOrmTestes
     }
 
     [TestMethod]
-    public void Deve_RetornarNulo_Ao_SelecionarRegistroPoId_ComIdErrado()
+    public void Deve_RetornarNulo_Ao_SelecionarRegistroPorId_ComIdErrado()
     {
         Contato contato = new Contato(
             "Juninho Testes 2",
