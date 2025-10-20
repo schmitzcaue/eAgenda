@@ -50,4 +50,59 @@ public sealed class RepositorioContatoEmOrmTestes
         // Asserção
         Assert.AreNotEqual(contato, contatoSelecionado);
     }
+
+    [TestMethod]
+    public void Deve_EditarRegistro_ComSucesso()
+    {
+        // Padrão AAA
+        // Arranjo
+        Contato contatoOriginal = new Contato(
+            "Juninho Testes",
+            "(49) 98533-3334",
+            "testes@academiadoprogramador.net",
+            "Academia do Programador",
+            "Testador"
+        );
+
+        repositorioContato.CadastrarRegistro(contatoOriginal);
+
+        Contato contatoEditado = new Contato(
+            "Pedrinho do Código",
+            "(49) 99452-5234",
+            "pedrinho_codigos@academiadoprogramador.net",
+            "Academia do Programador",
+            "Desenvolvedor"
+        );
+
+        // Ação
+        repositorioContato.EditarRegistro(contatoOriginal.Id, contatoEditado);
+
+        // Asserção
+        Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
+
+        Assert.AreEqual(contatoOriginal, contatoSelecionado);
+    }
+
+    [TestMethod]
+    public void Deve_ExcluirRegistro_ComSucesso()
+    {
+        // Arranjo
+        Contato contatoOriginal = new Contato(
+            "Juninho Testes",
+            "(49) 98533-3334",
+            "testes@academiadoprogramador.net",
+            "Academia do Programador",
+            "Testador"
+        );
+
+        repositorioContato.CadastrarRegistro(contatoOriginal);
+
+        // Ação
+        repositorioContato.ExcluirRegistro(contatoOriginal.Id);
+
+        // Asserção
+        Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
+
+        Assert.IsNull(contatoSelecionado);
+    }
 }
