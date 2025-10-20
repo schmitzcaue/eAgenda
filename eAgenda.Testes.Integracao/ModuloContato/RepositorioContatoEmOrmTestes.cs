@@ -75,11 +75,12 @@ public sealed class RepositorioContatoEmOrmTestes
         );
 
         // Ação
-        repositorioContato.EditarRegistro(contatoOriginal.Id, contatoEditado);
+        bool registroEditado = repositorioContato.EditarRegistro(contatoOriginal.Id, contatoEditado);
 
         // Asserção
         Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
 
+        Assert.IsTrue(registroEditado);
         Assert.AreEqual(contatoOriginal, contatoSelecionado);
     }
 
@@ -98,11 +99,12 @@ public sealed class RepositorioContatoEmOrmTestes
         repositorioContato.CadastrarRegistro(contatoOriginal);
 
         // Ação
-        repositorioContato.ExcluirRegistro(contatoOriginal.Id);
+        bool registroExcluido = repositorioContato.ExcluirRegistro(contatoOriginal.Id);
 
         // Asserção
         Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
 
+        Assert.IsTrue(registroExcluido);
         Assert.IsNull(contatoSelecionado);
     }
 }
