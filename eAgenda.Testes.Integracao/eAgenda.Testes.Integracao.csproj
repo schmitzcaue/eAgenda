@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UseVSTest>true</UseVSTest>
+    <UserSecretsId>b559503e-1f4c-4315-86af-a39185e3e1da</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
