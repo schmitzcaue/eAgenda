@@ -1,6 +1,5 @@
 using eAgenda.Infraestrutura.Orm;
 using eAgenda.WebApp.Config;
-using Microsoft.EntityFrameworkCore;
 
 namespace eAgenda.WebApp;
 
