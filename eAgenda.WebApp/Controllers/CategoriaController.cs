@@ -1,10 +1,12 @@
 ﻿using eAgenda.Dominio.ModuloCategoria;
 using eAgenda.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAgenda.WebApp.Controllers;
 
 [Route("categorias")]
+[Authorize]
 public class CategoriaController : Controller
 {
     private readonly IRepositorioCategoria repositorioCategoria;

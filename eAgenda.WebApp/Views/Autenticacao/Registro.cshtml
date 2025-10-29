@@ -1,0 +1,53 @@
+﻿@model RegistroViewModel;
+
+@{
+    ViewBag.Titulo = "Registro de Usuário";
+}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-sm-10 col-md-8 col-xl-5">
+        <div class="card shadow-sm rounded-4 border-0 mt-3">
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h3 class="fw-bold text-primary mb-0">e-Agenda</h3>
+
+                    <span class="fs-4 fw-normal">Registro</span>
+                </div>
+
+                <form asp-action="Registro" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-3">
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Email" class="control-label fs-5">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Senha" class="control-label fs-5">Senha</label>
+                        <input asp-for="Senha" class="form-control" type="password" />
+                        <span asp-validation-for="Senha" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="ConfirmarSenha" class="control-label fs-5">Confirmação da Senha</label>
+                        <input asp-for="ConfirmarSenha" class="form-control" type="password" />
+                        <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                        <a asp-action="Login">Já tenho uma conta</a>
+                        <button type="submit" class="btn btn-primary rounded-3 px-5">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <p class="text-center text-muted small mt-3 mb-0">
+            © @DateTime.Now.Year Controle de Cinema
+        </p>
+    </div>
+    <div class="col-10 col-lg order-0 order-lg-1 mx-auto text-end">
+        <img src="~/images/registro.svg" alt="Autenticação" class="img-fluid" />
+        <a class="text-decoration-none" href="https://storyset.com/people" target="_blank">Ilustrações de pessoas por <strong>Storyset</strong></a>
+    </div>
+</div>

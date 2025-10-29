@@ -17,23 +17,37 @@
 
 		<p class="fs-4 mt-4 text-secondary-emphasis">Clique em uma das opções abaixo para prosseguir:</p>
 
-		<div class="d-flex flex-wrap gap-2">
-			<div class="col col-lg-3">
-				<a href="/contatos" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Contatos</a>
+		@if (User.Identity is not null && User.Identity.IsAuthenticated)
+		{
+			<div class="d-flex flex-wrap gap-2">
+				<div class="col col-lg-3">
+					<a href="/contatos" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Contatos</a>
+				</div>
+				<div class="col col-lg-3">
+					<a href="/compromissos" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Compromissos</a>
+				</div>
+				<div class="col col-lg-3">
+					<a href="/categorias" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Categorias</a>
+				</div>
+				<div class="col col-lg-3">
+					<a href="/despesas" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Despesas</a>
+				</div>
+				<div class="col col-lg-3">
+					<a href="/tarefas" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Tarefas</a>
+				</div>
 			</div>
-			<div class="col col-lg-3">
-				<a href="/compromissos" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Compromissos</a>
+		}
+		else
+		{
+			<div class="d-flex flex-wrap gap-2">
+				<div class="col col-lg-3">
+					<a href="/autenticacao/registro" class="btn btn-primary fw-semibold rounded-3 w-100">Registro</a>
+				</div>
+				<div class="col col-lg-3">
+					<a href="/autenticacao/login" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Login</a>
+				</div>
 			</div>
-			<div class="col col-lg-3">
-				<a href="/categorias" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Categorias</a>
-			</div>
-			<div class="col col-lg-3">
-				<a href="/despesas" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Despesas</a>
-			</div>
-			<div class="col col-lg-3">
-				<a href="/tarefas" class="btn btn-outline-primary fw-semibold rounded-3 w-100">Tarefas</a>
-			</div>
-		</div>
+		}
 
 	</div>
 	<div class="col-lg-4 order-0 order-lg-1 mx-auto">

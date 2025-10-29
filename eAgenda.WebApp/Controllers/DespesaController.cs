@@ -1,12 +1,14 @@
 ﻿using eAgenda.Dominio.ModuloCategoria;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eAgenda.WebApp.Controllers;
 
 [Route("despesas")]
+[Authorize]
 public class DespesaController : Controller
 {
     private readonly IRepositorioDespesa repositorioDespesa;

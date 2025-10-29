@@ -1,11 +1,13 @@
 ﻿using eAgenda.Dominio.ModuloCompromisso;
 using eAgenda.Dominio.ModuloContato;
 using eAgenda.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eAgenda.WebApp.Controllers;
 
+[Authorize]
 [Route("compromissos")]
 public class CompromissoController : Controller
 {

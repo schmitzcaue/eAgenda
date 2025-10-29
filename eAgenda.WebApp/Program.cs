@@ -11,6 +11,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddCamadaInfraestruturaEmOrm(builder.Configuration);
+        builder.Services.AddIdentityProviderConfig();
 
         builder.Services.AddControllersWithViews();
 
@@ -29,6 +30,7 @@ public class Program
         app.UseStaticFiles();
 
         app.UseRouting();
+        app.UseAuthentication();
 
         app.UseAuthorization();
 
