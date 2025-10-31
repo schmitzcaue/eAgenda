@@ -1,4 +1,6 @@
-﻿using eAgenda.Dominio.ModuloCategoria;
+﻿using eAgenda.Dominio.ModuloAutenticacao;
+using eAgenda.Dominio.ModuloCategoria;
+using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -7,20 +9,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eAgenda.WebApp.Controllers;
 
-[Route("despesas")]
 [Authorize]
+[Route("despesas")]
 public class DespesaController : Controller
 {
     private readonly IRepositorioDespesa repositorioDespesa;
     private readonly IRepositorioCategoria repositorioCategoria;
+    private readonly ITenantProvider tenantProvider;
 
     public DespesaController(
-        IRepositorioDespesa repositorioDespesa, 
-        IRepositorioCategoria repositorioCategoria
+        IRepositorioDespesa repositorioDespesa,
+        IRepositorioCategoria repositorioCategoria,
+        ITenantProvider tenantProvider
     )
     {
         this.repositorioDespesa = repositorioDespesa;
         this.repositorioCategoria = repositorioCategoria;
+        this.tenantProvider = tenantProvider;
     }
 
     [HttpGet]

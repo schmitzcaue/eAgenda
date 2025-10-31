@@ -1,4 +1,6 @@
-﻿using eAgenda.Dominio.ModuloTarefa;
+﻿using eAgenda.Dominio.ModuloAutenticacao;
+using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Infraestrutura.Orm;
 using eAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,20 +8,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eAgenda.WebApp.Controllers;
 
-[Route("tarefas")]
 [Authorize]
+[Route("tarefas")]
 public class TarefaController : Controller
 {
     private readonly AppDbContext context;
     private readonly IRepositorioTarefa repositorioTarefa;
+    private readonly ITenantProvider tenantProvider;
 
-    public TarefaController(AppDbContext context, IRepositorioTarefa repositorioTarefa)
+    public TarefaController(
+        AppDbContext context,
+        IRepositorioTarefa repositorioTarefa,
+        ITenantProvider tenantProvider
+    )
     {
         this.context = context;
-
         this.repositorioTarefa = repositorioTarefa;
+        this.tenantProvider = tenantProvider;
     }
-
     [HttpGet]
     public IActionResult Index(string? status)
     {

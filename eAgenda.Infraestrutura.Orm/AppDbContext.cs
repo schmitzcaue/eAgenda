@@ -25,7 +25,7 @@ public static class AppDbContextFactory
     }
 }
 
-public class AppDbContext(DbContextOptions options) : IdentityDbContext<Usuario, Cargo, Guid>(options)
+public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null) : IdentityDbContext<Usuario, Cargo, Guid>(options)
 {
     public DbSet<Contato> Contatos { get; set; }
     public DbSet<Compromisso> Compromissos { get; set; }
@@ -36,6 +36,28 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Usuario,
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        if (tenantProvider is not null)
+        {
+            modelBuilder.Entity<Contato>()
+                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId);
+
+            modelBuilder.Entity<Compromisso>()
+                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId);
+
+            modelBuilder.Entity<Categoria>()
+                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId);
+
+            modelBuilder.Entity<Despesa>()
+                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId);
+
+            modelBuilder.Entity<Tarefa>()
+                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId);
+
+            modelBuilder.Entity<ItemTarefa>()
+                .HasQueryFilter(x => x.Tarefa.UsuarioId == tenantProvider.UsuarioId);
+        }
+
+
         modelBuilder.ApplyConfiguration(new MapeadorContatoEmOrm());
         modelBuilder.ApplyConfiguration(new MapeadorCompromissoEmOrm());
         modelBuilder.ApplyConfiguration(new MapeadorCategoriaEmOrm());
