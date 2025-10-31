@@ -29,5 +29,11 @@ public class MapeadorDespesaEmOrm : IEntityTypeConfiguration<Despesa>
         builder.HasMany(x => x.Categorias)
                .WithMany(c => c.Despesas)
                .UsingEntity(e => e.ToTable("TBCategoria_TBDespesa"));
+
+
+        builder.HasOne(x => x.Usuario)
+               .WithMany()
+               .HasForeignKey(x => x.UsuarioId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }
