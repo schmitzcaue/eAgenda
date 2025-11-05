@@ -1,24 +1,24 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - e-agenda-backend-2025-caue
+name: Build e Deploy - eAgenda MVC
 
-on:
+on: # Gatilho do fluxo de trabalho
   push:
     branches:
       - master
   workflow_dispatch:
 
 jobs:
-  build:
+  build: # Compila o projeto e o publica em uma pasta raíz
     runs-on: windows-latest
     permissions:
       contents: read #This is required for actions/checkout
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # Puxa os arquivos do repositório
 
-      - name: Set up .NET Core
+      - name: Set up .NET Core # Instala o .NET 8 na máquina executando o worflow
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
@@ -51,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D0D450BD579945D78F1EA330D268A0A5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_38B2477E2F2C42109953854E229AEF11 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_18381F0E150F4603A7294A908DC248C1 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_84EA7EA4FB5E4AF0AA294E56340EC132 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_046CBDABCE1B4B2CA9D28756B7A056A4 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_009D74DC40D84063B995240F5B9FBE09 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
