@@ -23,6 +23,14 @@ public static class AppDbContextFactory
 
         return new AppDbContext(builder.Options);
     }
+
+    public static AppDbContext CriarDbContext()
+    {
+        var builder = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase("eAgendaDb");
+
+        return new AppDbContext(builder.Options);
+    }
 }
 
 public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null) : IdentityDbContext<Usuario, Cargo, Guid>(options)
