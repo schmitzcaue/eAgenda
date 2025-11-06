@@ -58,6 +58,7 @@ jobs:
         env:
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
 
+
   deploy:
     runs-on: windows-latest
     needs: [build, migrate]
