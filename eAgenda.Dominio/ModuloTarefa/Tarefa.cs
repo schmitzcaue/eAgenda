@@ -69,13 +69,6 @@ public class Tarefa : EntidadeBase<Tarefa>
         return item;
     }
 
-    public ItemTarefa AdicionarItem(ItemTarefa item)
-    {
-        Itens.Add(item);
-
-        return item;
-    }
-
     public bool RemoverItem(ItemTarefa item)
     {
         Itens.Remove(item);
