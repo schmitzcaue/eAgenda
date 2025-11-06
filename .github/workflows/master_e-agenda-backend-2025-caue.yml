@@ -35,9 +35,28 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  migrate:
+  test:
     runs-on: windows-latest
     needs: build
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+     
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+    
+      - name: Run tests
+        run: dotnet test --configuration Release --verbosity normal
+        env:
+          ASPNET_ENVIRONMENT: "STAGING"
+      
+  migrate:
+    runs-on: windows-latest
+    needs: [build, test]
     permissions:
       contents: read
 
@@ -61,7 +80,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: [build, migrate]
+    needs: [build, test, migrate]
 
     permissions:
       id-token: write #This is required for requesting the JWT
