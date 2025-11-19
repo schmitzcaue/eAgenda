@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
+//using OpenQA.Selenium.Edge;
 
 namespace eAgenda.Testes.Interface;
 
@@ -39,6 +40,10 @@ public sealed class AutenticacaoInterfaceTestes
             .FindElement(By.CssSelector("input[data-se=inputConfirmarSenha]"))
             .SendKeys("Teste@123");
 
+        new Actions(webDriver)
+                .ScrollToElement(webDriver
+            .FindElement(By.CssSelector("button[data-se=btnConfirmar]")))
+                .Perform();
         webDriver
             .FindElement(By.CssSelector("button[data-se=btnConfirmar]"))
             .Click();
@@ -49,7 +54,7 @@ public sealed class AutenticacaoInterfaceTestes
     [TestMethod]
     public void Deve_Autenticar_Usuario_Corretamente()
     {
-        webDriver = new ChromeDriver();
+        webDriver = new EdgeDriver();
 
         webDriver.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao", "login"));
 
