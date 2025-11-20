@@ -59,4 +59,30 @@ public abstract class TestFixture
 
         webDriverWait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
     }
+    protected void RegistrarEAutenticarUsuario()
+    {
+        webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao", "registro"));
+
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputEmail]")))
+            .SendKeys("teste@gmail.com");
+
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputSenha]")))
+            .SendKeys("SenhaSuperForteTeste@5912");
+
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputConfirmarSenha]")))
+            .SendKeys("SenhaSuperForteTeste@5912");
+
+        webDriverWait?
+           .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]")))
+           .Click();
+
+        webDriverWait?
+            .Until(d => d.PageSource.Contains("Página Inicial"));
+
+        webDriverWait?
+            .Until(d => d.PageSource.Contains("teste@gmail.com"));
+    }
 }
