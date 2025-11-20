@@ -1,5 +1,4 @@
 ﻿using eAgenda.Dominio.ModuloAutenticacao;
-using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Infraestrutura.Orm;
 using eAgenda.WebApp.Models;

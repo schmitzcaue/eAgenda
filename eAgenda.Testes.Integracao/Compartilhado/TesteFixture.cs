@@ -4,7 +4,6 @@ using eAgenda.Infraestrutura.Orm.ModuloCompromisso;
 using eAgenda.Infraestrutura.Orm.ModuloContato;
 using eAgenda.Infraestrutura.Orm.ModuloDespesa;
 using eAgenda.Infraestrutura.Orm.ModuloTarefa;
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace eAgenda.Testes.Integracao.Compartilhado;

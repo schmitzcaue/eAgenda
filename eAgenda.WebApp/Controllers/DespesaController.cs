@@ -1,6 +1,5 @@
 ﻿using eAgenda.Dominio.ModuloAutenticacao;
 using eAgenda.Dominio.ModuloCategoria;
-using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
