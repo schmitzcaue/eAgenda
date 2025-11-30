@@ -1,4 +1,5 @@
 ﻿using eAgenda.Testes.Interface.Compartilhado;
+using eAgenda.Testes.Interface.ModuloContato;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -14,39 +15,12 @@ public class CompromissoInterfaceTestes : TestFixture
         // Arranjo
         RegistrarEAutenticarUsuario();
 
-        webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "compromissos", "cadastrar"));
-
         // Ação
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputAssunto]"))).SendKeys("Reunião de Trabalho");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputData]"))).SendKeys("22/12/2025");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputHoraInicio]"))).SendKeys("09:00");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputHoraTermino]"))).SendKeys("10:00");
-
-        var inputTipo = webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("select[data-se=inputTipo]")));
-
-        var selectInputTipo = new SelectElement(inputTipo!);
-        selectInputTipo.SelectByText("Presencial");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputLocal]"))).SendKeys("MidiLages");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
+        CadastrarCompromissoPadrao();
 
         // Asserção
-        webDriverWait?
-            .Until(d => d.Title.Contains("Visualização de Compromissos"));
-
-        webDriverWait?
-            .Until(d => d.PageSource.Contains("Reunião de Trabalho"));
+        webDriverWait!.Until(d => d.Title.Contains("Visualização de Compromissos"));
+        webDriverWait!.Until(d => d.PageSource.Contains("Reunião de Trabalho"));
     }
 
     [TestMethod]
@@ -55,47 +29,28 @@ public class CompromissoInterfaceTestes : TestFixture
         // Arranjo
         RegistrarEAutenticarUsuario();
 
-        CadastrarContato();
+        ContatoInterfaceTestes.CadastrarContatoPadrao();
 
-        webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "compromissos", "cadastrar"));
+
+        webDriverWait!.Until(d => d.Title.Contains("Visualização de Contatos"));
+        webDriverWait!.Until(d => d.PageSource.Contains("Oscar Lima"));
+
+        NavegarPara("/compromissos/cadastrar");
 
         // Ação
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputAssunto]"))).SendKeys("Reunião de Trabalho");
+        PreencherCamposBasicosDeCompromisso();
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputData]"))).SendKeys("22/12/2025");
+        // Seleciona o contato
+        var selectContato = new SelectElement(
+            EsperarPorElemento(By.CssSelector("select[data-se=inputContatoId]"))
+        );
+        selectContato.SelectByText("Oscar Lima");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputHoraInicio]"))).SendKeys("09:00");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputHoraTermino]"))).SendKeys("10:00");
-
-        var inputTipo = webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("select[data-se=inputTipo]")));
-
-        var selectInputTipo = new SelectElement(inputTipo!);
-        selectInputTipo.SelectByText("Presencial");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputLocal]"))).SendKeys("MidiLages");
-
-        var inputContatoId = webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("select[data-se=inputContatoId]")));
-
-        var selectInputContatoId = new SelectElement(inputContatoId!);
-        selectInputContatoId.SelectByText("Oscar Lima");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
+        EsperarPorElemento(By.CssSelector("button[data-se=btnConfirmar]")).Click();
 
         // Asserção
-        webDriverWait?
-            .Until(d => d.Title.Contains("Visualização de Compromissos"));
-
-        webDriverWait?
-            .Until(d => d.PageSource.Contains("Reunião de Trabalho"));
+        webDriverWait!.Until(d => d.Title.Contains("Visualização de Compromissos"));
+        webDriverWait!.Until(d => d.PageSource.Contains("Reunião de Trabalho"));
     }
 
     [TestMethod]
@@ -104,25 +59,19 @@ public class CompromissoInterfaceTestes : TestFixture
         // Arranjo
         RegistrarEAutenticarUsuario();
 
-        CadastrarCompromisso();
+        CadastrarCompromissoPadrao();
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("a[data-se=btnEditar]")))
-            .Click();
+        EsperarPorElemento(By.CssSelector("a[data-se=btnEditar]")).Click();
 
         // Ação
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputAssunto]"))).SendKeys(" Editada");
+        EsperarPorElemento(By.CssSelector("input[data-se=inputAssunto]"))
+           .SendKeys(" Editada");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
+        EsperarPorElemento(By.CssSelector("button[data-se=btnConfirmar]")).Click();
 
         // Asserção
-        webDriverWait?
-            .Until(d => d.Title.Contains("Visualização de Compromissos"));
-
-        webDriverWait?
-            .Until(d => d.PageSource.Contains("Reunião de Trabalho Editada"));
+        webDriverWait!.Until(d => d.Title.Contains("Visualização de Compromissos"));
+        webDriverWait!.Until(d => d.PageSource.Contains("Reunião de Trabalho Editada"));
     }
 
     [TestMethod]
@@ -131,73 +80,49 @@ public class CompromissoInterfaceTestes : TestFixture
         // Arranjo
         RegistrarEAutenticarUsuario();
 
-        CadastrarCompromisso();
+        CadastrarCompromissoPadrao();
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("a[data-se=btnExcluir]")))
-            .Click();
+        EsperarPorElemento(By.CssSelector("a[data-se=btnExcluir]")).Click();
 
         // Ação
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
+        EsperarPorElemento(By.CssSelector("button[data-se=btnConfirmar]")).Click();
 
         // Asserção
-        webDriverWait?
-            .Until(d => d.Title.Contains("Visualização de Compromissos"));
-
-        webDriverWait?
-            .Until(d => !d.PageSource.Contains("Reunião de Trabalho"));
+        webDriverWait!.Until(d => d.Title.Contains("Visualização de Compromissos"));
+        webDriverWait!.Until(d => !d.PageSource.Contains("Reunião de Trabalho"));
     }
 
-    private void CadastrarCompromisso()
+    public static void CadastrarCompromissoPadrao()
     {
-        webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "compromissos", "cadastrar"));
+        NavegarPara("/compromissos/cadastrar");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputAssunto]"))).SendKeys("Reunião de Trabalho");
+        PreencherCamposBasicosDeCompromisso();
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputData]"))).SendKeys("22/12/2025");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputHoraInicio]"))).SendKeys("09:00");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputHoraTermino]"))).SendKeys("10:00");
-
-        var inputTipo = webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("select[data-se=inputTipo]")));
-
-        var selectInputTipo = new SelectElement(inputTipo!);
-        selectInputTipo.SelectByText("Presencial");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputLocal]"))).SendKeys("MidiLages");
-
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
+        EsperarPorElemento(By.CssSelector("button[data-se=btnConfirmar]")).Click();
     }
 
-    private void CadastrarContato()
+    public static void PreencherCamposBasicosDeCompromisso()
     {
-        webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "contatos", "cadastrar"));
+        EsperarPorElemento(By.CssSelector("input[data-se=inputAssunto]"))
+           .SendKeys("Reunião de Trabalho");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputNome]"))).SendKeys("Oscar Lima");
+        EsperarPorElemento(By.CssSelector("input[data-se=inputData]"))
+            .SendKeys("22/12/2025");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputTelefone]"))).SendKeys("(49) 98888-2222");
+        EsperarPorElemento(By.CssSelector("input[data-se=inputHoraInicio]"))
+            .SendKeys("09:00");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputEmail]"))).SendKeys("oscar25lima@hotmail.com");
+        EsperarPorElemento(By.CssSelector("input[data-se=inputHoraTermino]"))
+            .SendKeys("10:00");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputEmpresa]"))).SendKeys("TurboAuto");
+        var selectTipo = new SelectElement(
+            EsperarPorElemento(By.CssSelector("select[data-se=inputTipo]"))
+        );
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputCargo]"))).SendKeys("Mecânico");
+        selectTipo.SelectByText("Presencial");
 
-        webDriverWait?
-            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
+
+        EsperarPorElemento(By.CssSelector("input[data-se=inputLocal]"))
+            .SendKeys("MidiLages");
     }
 }

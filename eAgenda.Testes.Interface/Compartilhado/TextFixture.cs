@@ -11,7 +11,7 @@ public abstract class TestFixture
     protected static WebDriver? webDriver;
     protected static WebDriverWait? webDriverWait;
     protected static AppDbContext? dbContext;
-    protected string enderecoBase = "https://localhost:9001";
+    protected static string enderecoBase = "https://localhost:9001";
 
     [AssemblyInitialize]
     public static void ConfigurarTestFixture(TestContext testContext)
