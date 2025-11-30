@@ -13,53 +13,60 @@
         <div class="card rounded-4 border-0">
             <div class="card-body p-md-5">
                 <form asp-action="Editar" asp-route-id="@Model.Id">
-                    <h3>Formulário de Cadastro</h3>
+                    <h3>Formulário de Edição</h3>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Assunto" class="control-label fs-5">Assunto:</label>
-                        <input asp-for="Assunto" class="form-control" placeholder="Informe o assunto do compromisso"/>
+                        <input asp-for="Assunto" class="form-control" placeholder="Informe o assunto do compromisso" data-se="inputAssunto" />
                         <span asp-validation-for="Assunto" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Data" class="control-label fs-5">Data:</label>
-                        <input asp-for="Data" class="form-control" type="date" />
+                        <input asp-for="Data" class="form-control" type="date" data-se="inputData" />
                         <span asp-validation-for="Data" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="HoraInicio" class="control-label fs-5">Hora de Início:</label>
-                        <input asp-for="HoraInicio" class="form-control" type="time" />
+                        <input asp-for="HoraInicio" class="form-control" type="time" data-se="inputHoraInicio" />
                         <span asp-validation-for="HoraInicio" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="HoraTermino" class="control-label fs-5">Hora de Término:</label>
-                        <input asp-for="HoraTermino" class="form-control" type="time" />
+                        <input asp-for="HoraTermino" class="form-control" type="time" data-se="inputHoraTermino" />
                         <span asp-validation-for="HoraTermino" class="text-danger"></span>
                     </div>
 
+                    @* <div class="form-group d-grid gap-2 mt-3"> *@
+                    @*     <label asp-for="Tipo" class="control-label fs-5">Tipo de Compromisso:</label> *@
+                    @*     <select asp-for="Tipo" id="inputTipo" asp-items="@Html.GetEnumSelectList<TipoCompromisso>()" class="form-select" data-se="inputTipo" "></select> *@
+                    @*     <span asp-validation-for="Tipo" class="text-danger"></span> *@
+                    @* </div> *@
+
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Tipo" class="control-label fs-5">Tipo de Compromisso:</label>
-                        <select asp-for="Tipo" id="inputTipo" asp-items="@Html.GetEnumSelectList<TipoCompromisso>()" class="form-select"></select>
+                        <select asp-for="Tipo" id="inputTipo" asp-items="@Html.GetEnumSelectList<TipoCompromisso>()" class="form-select" 
+                            data-se="inputTipo"></select>
                         <span asp-validation-for="Tipo" class="text-danger"></span>
                     </div>
 
                     <div id="inputLocal" class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Local" class="control-label fs-5">Local:</label>
-                        <input asp-for="Local" class="form-control" placeholder="Informe o local do compromisso" />
+                        <input asp-for="Local" class="form-control" placeholder="Informe o local do compromisso" data-se="inputLocal" />
                         <span asp-validation-for="Local" class="text-danger"></span>
                     </div>
 
                     <div id="inputLink" class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Link" class="control-label fs-5">Link:</label>
-                        <input asp-for="Link" class="form-control" placeholder="Informe o link remoto do compromisso" />
+                        <input asp-for="Link" class="form-control" placeholder="Informe o link remoto do compromisso" data-se="inputLink" />
                         <span asp-validation-for="Link" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="ContatoId" class="control-label fs-5">Contato:</label>
-                        <select asp-for="ContatoId" asp-items="@Model.ContatosDisponiveis" class="form-select">
+                        <select asp-for="ContatoId" asp-items="@Model.ContatosDisponiveis" class="form-select" data-se="inputContatoId">
                             <option value="">Nenhum contato selecionado</option>
                         </select>
                         <span asp-validation-for="ContatoId" class="text-danger"></span>
@@ -67,7 +74,7 @@
 
                     <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
                         <a href="/compromissos">Voltar para a listagem</a>
-                        <button type="submit" class="btn btn-primary rounded-3 px-5">Confirmar</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-5" data-se="btnConfirmar">Confirmar</button>
                     </div>
                 </form>
             </div>

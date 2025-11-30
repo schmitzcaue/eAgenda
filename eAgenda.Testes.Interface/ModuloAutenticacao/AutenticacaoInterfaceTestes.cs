@@ -5,7 +5,7 @@ namespace eAgenda.Testes.Interface.ModuloAutenticacao;
 
 [TestClass]
 [TestCategory("Testes de Interface de Autenticação")]
-public sealed class AutenticacaoInterfaceTestes : TestFixture
+public sealed class CompromissoInterfaceTestes : TestFixture
 {
     [TestMethod]
     public void Deve_Registrar_Usuario_Corretamente()
