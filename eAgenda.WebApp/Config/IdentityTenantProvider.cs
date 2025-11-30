@@ -12,7 +12,7 @@ public class IdentityTenantProvider(IHttpContextAccessor contextAcessor) : ITena
             // Tenta obter o ID do usuário requisitante
             var claim = contextAcessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier);
 
-            return Guid.Parse(claim!.Value);
+            return claim is not null ? Guid.Parse(claim.Value) : null;
         }
     }
 }
