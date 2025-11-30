@@ -1,6 +1,7 @@
 ﻿using eAgenda.Infraestrutura.Orm;
 using Microsoft.Extensions.DependencyInjection;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Support.UI;
 
@@ -24,7 +25,27 @@ public abstract class TestFixture
         dbContext = serverFactory.Servicos.GetRequiredService<AppDbContext>();
 
         enderecoBase = serverFactory.UrlKestrel;
-        webDriver = new EdgeDriver();
+        EdgeOptions edgeOptions = new EdgeOptions();
+
+        // Se estiver no GitHub Actions (CI não está vazia)
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("CI")))
+        {
+            edgeOptions.AddArguments(
+                "--headless",              // Sem interface gráfica
+                "--no-sandbox",            // Necessário para Docker/CI
+                "--disable-dev-shm-usage", // Evita problemas de memória
+                "--disable-gpu",           // Desabilita GPU
+                "--window-size=1920,1080", // Resolução fixa
+                "--lang=pt-BR"             // Configura cultura do navegador fixa
+            );
+        }
+        else
+        {
+            edgeOptions.AddArgument("--start-fullscreen");
+        }
+
+        webDriver = new EdgeDriver(edgeOptions);
+    
     }
 
     [AssemblyCleanup]
