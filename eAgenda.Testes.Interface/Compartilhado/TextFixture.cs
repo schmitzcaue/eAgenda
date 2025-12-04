@@ -71,33 +71,34 @@ public abstract class TestFixture
             }
         }
 
-        [TestInitialize]
-    public void InicializarTeste()
-    {
-        if (dbContext is null || webDriver is null) return;
-
-        dbContext.Database.EnsureCreated();
-
-        dbContext.Tarefas.RemoveRange(dbContext.Tarefas);
-        dbContext.Despesas.RemoveRange(dbContext.Despesas);
-        dbContext.Categorias.RemoveRange(dbContext.Categorias);
-        dbContext.Compromissos.RemoveRange(dbContext.Compromissos);
-        dbContext.Contatos.RemoveRange(dbContext.Contatos);
-
-        // Tabelas do ASP.NET Identity
-        dbContext.UserClaims.RemoveRange(dbContext.UserClaims);
-        dbContext.UserTokens.RemoveRange(dbContext.UserTokens);
-        dbContext.UserLogins.RemoveRange(dbContext.UserLogins);
-        dbContext.UserRoles.RemoveRange(dbContext.UserRoles);
-        dbContext.Users.RemoveRange(dbContext.Users);
-
-        dbContext.SaveChanges();
-
-        webDriver.Manage().Cookies.DeleteAllCookies();
-
-
-        webDriverWait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
     }
+        [TestInitialize]
+        public void InicializarTeste()
+        {
+            if (dbContext is null || webDriver is null) return;
+
+            dbContext.Database.EnsureCreated();
+
+            dbContext.Tarefas.RemoveRange(dbContext.Tarefas);
+            dbContext.Despesas.RemoveRange(dbContext.Despesas);
+            dbContext.Categorias.RemoveRange(dbContext.Categorias);
+            dbContext.Compromissos.RemoveRange(dbContext.Compromissos);
+            dbContext.Contatos.RemoveRange(dbContext.Contatos);
+
+            // Tabelas do ASP.NET Identity
+            dbContext.UserClaims.RemoveRange(dbContext.UserClaims);
+            dbContext.UserTokens.RemoveRange(dbContext.UserTokens);
+            dbContext.UserLogins.RemoveRange(dbContext.UserLogins);
+            dbContext.UserRoles.RemoveRange(dbContext.UserRoles);
+            dbContext.Users.RemoveRange(dbContext.Users);
+
+            dbContext.SaveChanges();
+
+            webDriver.Manage().Cookies.DeleteAllCookies();
+
+
+            webDriverWait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        }
     protected void RegistrarEAutenticarUsuario()
     {
         webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao", "registro"));
@@ -123,5 +124,24 @@ public abstract class TestFixture
 
         webDriverWait?
             .Until(d => d.PageSource.Contains("teste@gmail.com"));
+    }
+
+    protected static void NavegarPara(string caminhoRelativo)
+    {
+        var enderecoBaseUri = new Uri(enderecoBase);
+
+        var uri = new Uri(enderecoBaseUri, caminhoRelativo);
+
+        webDriver?.Navigate().GoToUrl(uri);
+    }
+
+    protected static IWebElement EsperarPorElemento(By localizador)
+    {
+        return webDriverWait!.Until(driver =>
+        {
+            var elemento = driver.FindElement(localizador);
+
+            return elemento.Displayed ? elemento : null;
+        });
     }
 }
